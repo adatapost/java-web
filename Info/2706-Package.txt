@@ -1,0 +1,106 @@
+Package
+---------------
+ As per JLS, never create a TYPE in default package.
+
+ If "package" statement is missing then our class will be created in "default" package -- the default package name is the name of current folder.
+
+
+Example : Create a class called "Emp" in c:\abc folder having in.avd package.
+
+          Create another class called "EmpTest" in c:\pqr folder with com.me package. In main() method of EmpTest, instantiate the in.avd.Emp class.
+
+
+Steps:
+
+c:\abc>notepad Emp.java
+
+package in.avd;
+
+public class Emp
+{
+  public Emp(){
+      System.out.println("Emp constructor.");
+  }
+}
+
+   
+c:\abc>javac Emp.java -d .
+
+   -d switch create package folders   at . (current folder       or you can specify path)
+
+      javac Emp.java -d c:\myclasses
+
+
+c:\pqr>notepad EmpTest.java
+
+package com.me;
+
+public class EmpTest
+{
+  public static void main(String []args)
+   {
+      in.avd.Emp emp = new in.avd.Emp(); //Fully qualified path
+    }
+}
+
+
+Or use "import" statement
+
+
+package com.me;
+
+import in.avd.Emp;
+
+public class EmpTest
+{
+  public static void main(String []args)
+   {
+       Emp emp = new  Emp(); 
+    }
+}
+
+c:\pqr>javac -cp .;c:\abc EmpTest.java -cp  .
+
+   -cp  switch instructs the Java compiler to resolve the
+        TYPES. Use ; (semi-colon) to delimete the folders         or .jar files.
+
+
+
+
+
+c:\pqr>java -cp .;c:\abc com.me.EmpTest
+
+   And you can launch EmpTest from anywhere using,
+
+   c:\>java -cp .;c:\abc;c:\pqr com.me.EmpTest
+
+
+jar.exe - tool : To create bundle or achrive of classes
+=======================================================
+
+Create .jar which contains classes from in.avd package.
+
+c:\abc>jar -cf mylib.jar in (<---name of top-level package
+                                 or path)
+    -c create a jar
+    -f file name
+    -v verbose
+
+c:\>java -cp .;c:\abc\mylib.jar;c:\pqr com.me.EmpTest
+
+
+
+
+Eclipse - export menu option to create .jar
+---------------------------------------------
+  
+There can be two types of JAR -- 1) Library (without main method) and 2) Executable (includes main class)
+
+To launch the "Executable Jar":
+
+   >java -jar File.Jar
+
+Or  Double click or Open With - Java SE Binary
+
+
+

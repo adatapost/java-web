@@ -1,0 +1,89 @@
+<jsp:XXXXXX> Jsp Actions or Jsp Tags
+======================================================
+
+JSP Actions are specialized tags which perform following tasks:
+
+ 1. Request a resource
+  
+    <jsp:include page="url"></jsp:include>
+
+ 2. Request resource by placing data
+
+     <jsp:include page="url">
+        <jsp:param name="key" value="value"/>
+        ....
+     </jsp:include>
+
+Example
+------
+
+page1.jsp
+
+<h1>Value </h1>
+<jsp:include page="page2.jsp">
+   <jsp:param name="no" value="3"/>
+</jsp:include>
+
+
+
+page2.jsp
+-----------
+<%
+   int no = Integer.parseInt ( request.getParameter("no") );
+   out.println(no*no);
+%>
+
+
+2. <jsp:forward page="url"/>
+   <jsp:forward page="url">
+      <jsp:param name="name" value="value"/>
+      ...
+    </jsp:forward>
+
+  To transfer user (or request another page and mark it as active   request) along with data.
+
+page1.jsp
+-----------
+<jsp:forward page="page2.jsp"/>
+
+
+page2.jsp
+-----------
+<h1>Content of page2</h1>
+
+3. <jsp:useBean/>  -- To creates an object
+
+    <jsp:useBean id="objRef" class="package.ClassName"/>
+
+4. <jsp:setProperty/> To call "setter" to set object value
+
+5. <jsp:getProperty/> To call "getter" to get object  value
+
+  Syntax:
+ 
+   <jsp:useBean id="emp" class="in.abc.Emp"/>
+
+   <jsp:setProperty name="emp" 
+                    property="id"
+                    value="10"/>
+    <jsp:setProperty name="emp" 
+                    property="name"
+                    value="Mr. A"/>
+
+    To write property value:
+
+    <jsp:getProperty name="emp"
+                     property="id"/>
+
+    <jsp:getProperty name="emp"
+                     property="name"/>
+
+  The "name" attribute of <jsp:getProperty/> and <jsp:setProperty/>
+  must be "id" value of <jsp:useBean/>.
+
+   
+
+  
+ 
+
+    

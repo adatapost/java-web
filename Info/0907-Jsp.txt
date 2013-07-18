@@ -1,0 +1,229 @@
+Java Server Pages - JSP
+======================================================================
+
+JSP is Java Core Web's View engine or technology which generate dynamic content of Html/JavaScript/Css when it is requested.
+
+  => JSP Engine is to generate "output" so the client can render it.
+  => JSP Engine (a software tool) installed into the "container" which
+     parse the .jsp file, convert .jsp page to .java and then it      compiles it on first request or whenever the .jsp file is      modified.
+
+     Behind the screen, every .jsp file is a "Servlet" with one exception that user (or developer) can write anything including JavaScript, Html, Css, Text along with Java Code.
+  
+   => Like asp.net, JSP view engine offer page-compilation.
+  
+   => The name of compiled JSP class will be :
+
+           if file name is "sample.jsp"   then class will be
+                "sample_jsp.java"
+
+   => In JSP class, we've three JSP life cycle methods namely:
+
+          1. jspInit()  -- It will be called when an instance of JSP
+                           class is created
+
+          2. jspService() --- It is called "service" or "servlet                 service" method and it will be called on each request.
+
+          3. jspDestroy() --- It will be called when an instance of JSP
+                             class removed from "Servlet Pool                          Instance" from "container".
+
+JSP Components
+==========================
+The .jsp page include Java code along with Html/JavaScript/CSS. To embed or include Java code in JSP, we've following technologies :
+
+1. JSP Tags
+2. Expression Language
+3. Java Server Pages Standard Tag Library
+4. Directives
+5. JSP Actions & Tags
+
+1. JSP Tags
+------------
+
+Three Tags used to embed Java code are :
+
+1. Scriptlet syntax
+
+    <%
+      //statement
+    %>
+
+ 
+  or XML syntax
+    
+    <jsp:scriptlet>
+       //statement
+    </jsp:scriptlet>
+
+   Statement inside the scriptlet are added into jspService() method    hence this block is called "local" block.
+
+2. Expression syntax
+
+    <%= expression %>
+
+    Or
+
+    <jsp:expression>
+       expression
+    </jsp:expression>
+
+   "expression" can be variable, literal or an expression that will be
+    written into the response buffer.
+
+    <%=no %> 
+ 
+    is equivalent to 
+
+    out.print(no); 
+
+3. Declarator syntax
+
+   <%!
+      //definition of methods, class and fields
+    %>
+
+   Or
+
+   <jsp:declaration>
+     //
+   </jsp:declaration>
+
+Ex: page1.jsp
+----------------------------------
+
+<!-- declarator --->
+<%!
+  
+  String now()
+    {
+      return new java.util.Date().toString();
+     }
+%>
+
+<!-- scriptlets ---->
+
+<%
+  int no = 10;
+  String name = "Mr.A";
+
+  out.println("<p>No : " + no + "</p>");
+%>
+
+<!-- Expression -->
+
+<p>Name : <%=name%> </p>
+ <p>Today <%=now()%></p>
+
+Ex: JSP page life-cycle
+===============================
+
+page2.jsp
+========
+<%!
+   int no = 0;
+%>
+
+<%
+  no++;
+%>
+<p><%=no%></p>
+
+
+ Life-cycle stages:
+
+   1. The "container" create an array of "objects" called "Servlet       Pool" to store instance of "servlets".
+
+      On first request to Servlet/JSP, the container will examine the "ServletPoo" and if its object is found then it invoke that Servlet's "Service" method.
+
+      If "ServeltPool" cannot have an instance of "Servlet" then container will be create an object of "Servlet/JSP", and push this newly created Servlet/JSP object into "Pool".
+
+  2.  On instantiation of "servlet", the container invoke "call-back" method called "init" or "jspInit".
+
+  3. When an application server is shutdown or "context" is shutdown, the "Servlet Pool" will be released -- ie. all servlet objects will be garbage collected after the exeuction of "destroy" or "jspDestroy" method.
+
+  4. The "service" method of "servlet" instance will be called on each      request.
+
+ So in above example, we'll get incremented value from different requests till context or container is alive.
+
+ 
+
+Never add Java Code into JSPs
+==========================================================
+
+We know that each .jsp page is a servlet class and it is instantiated once per application. If we wrote code in JSP Declaration then this code & Data wont be removed till content is running.
+
+Following are valid reasons to not to use Java Code in JSP
+
+  1. Never use declarator to create an object, variables, classes etc.
+
+  2. JSP cannot determine the request type --- A request is GET or      POST?
+
+     JSP and its technology uses common set of methods to process the 
+      GET or POST request.
+
+  3. JSP especially designed to create a "View" (output) based upon the      program execution. Basically, a "View" contains      HTML/Text/CSS/JavaScript and if you add Java code via JSP Tags then the entire web-page will become "unstable" --- complex to read and even modified.
+
+
+  4. In JSP Tags, we must have to track the NPE (Null Pointer      Exception) that might throws an exception.
+
+  5. Two more specifications are added into JSP technology are :
+         1. Expression Language - EL and
+         2. JSTL 
+     to reduce the Java Code in JSPs. (In fact, you dont have to use      JSP tags if you use EL & JSTL)
+
+
+JSP Tag Practices
+=================================
+1. Embed Java code to generate HTML output
+
+<select>
+  <%
+  for(int i =1; i <=10; i++)
+   {
+    out.println("<option>" + i + "</option>");
+    }
+   %>
+</select>
+
+Alternatively, you can break the Jsp Scriptlet code as follow:
+
+
+<select>
+ <%
+   for(int i=1;i<=10;i++)
+    {
+    %>
+    <option><%=i%></option>
+   <%
+    }
+   %>
+</select>
+    
+Ex:2
+
+<%
+  String [] cities = {"Meh","Pat","Raj"};
+  out.println("<select>");
+  for(String s: cities)
+    out.println("<option>" + s + "</option>");
+  
+  out.println("</select>");
+
+%>
+
+Ex:3 
+
+   
+<h3>Date Time</h3>
+
+<%
+  java.util.Date date = new java.util.Date();
+  out.println(date);
+  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+  out.println(sdf.format(date));
+%>
+
+
+
+   
+
+  

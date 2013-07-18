@@ -1,0 +1,74 @@
+What is Java EE Platform
+===========================
+
+The EE (Enterprize Edition) is an application programming interface, Java language and Core API to develop, deploy and managed the business application.
+
+
+    In fact, three software bundles makes a EE platform :
+
+          1. Java EE API (web, Email, EJB, Message API ...)
+          2. Java Language
+          3. Core API
+
+The Java EE platform is formed with number of specifications including --- Java Server Pages, Java Servlet, Expression Language, Java Server Pages Standard Tag Library, Enterprise Java Beans, Messaging, Xml Binding Web Service, SOAP Web Service, RESTFUL Web Service, Mail and so on. --- These specifications are downloaded from java.net and based upon these specification, number of vendors around the world deveop the Java EE application server and Java EE APIs.
+
+There are number of Java EE app server vendors including -- Oracle , Apache Tomcat, IBM's Web Sphere, Oracle's Web Logic Bea, Jboss, JRun, and Google  etc --- All these vendors offer Application Server and Java EE APIs.
+
+
+
+What about "Web-Server"?
+--------------------------
+
+    The "Web-Server" resolve the client request. That means whenever, a client (web-browser) request a resource, this resource is delivered to the client by the web-server.
+
+    It is important to note here that web-server cannot process the request or cannot execute the requested program. 
+
+    
+If client request is a "program", then web-server forward this request the "application server". An application server is managed runtime environment which will process/execute the program, produce output and return the produced output to the web-server. And web-server forward this output to the "web-browser.
+
+
+
+Java EE Application Server Or container
+========================================
+
+An application server or container can host the applications which are developed using Java EE Platform & APIs and provide all necessary services till an application is part of application server's family.
+
+These services includes:
+
+   1. Memory management for an application.
+   2. Provide "Integration" services ---- Database, Email,
+      Printing etc.
+   3. It provide authentication & authorization service
+   4. It provide naming and directiory service to search
+       objects, machines etc.
+
+
+Java EE App server can host following Java EE applications:
+  1.  EJB Application
+  2.  WEb Application
+  3.  Client & Applet Application
+  4.  Web Service Application
+
+[Current version of Java EE is 6]
+
+
+The Web Container
+------------------
+
+ We've two app servers --- 1) Apache-Tomcat and
+                           2) Glassh-Fish (From oracle)
+
+ Apache-tomcat app server can be used to host "EJB" and "Web" apps and it provide limited services by default. (However you may config other services/modules)
+
+The "Context"
+---------------------
+
+An "application" hosted in "container" is called "context" i.e name of application is referred as "application context" ---- Each app context is started/managed/stopped by the container.
+
+  You can start/stop/pause the "context" using "administrative control panel" of "Application server".
+
+
+
+
+
+

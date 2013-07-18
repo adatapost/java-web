@@ -1,0 +1,58 @@
+Array definition syntax:
+ 
+    DataType  []varName1, varName2,...;
+
+          All variables followed by [] (subscript operator)           are array.
+
+
+    DataType varName1[],varName2;
+  
+           varName1 is an array and "varNAme2" is regular            var.
+
+
+To create an array (syntax):
+
+    DataType var[] = new DataType[NumberOfElements>0];
+
+    Or
+
+    //Initialization
+    DataType var[]= { value1, value2, .....};
+
+
+
+
+Array of Objects (Collection of objects)
+==================
+
+  Suppose we wish to hold references of number of "student"   objects.
+
+   //Define a array reference variable
+   Student students[];  // Student []students;
+
+   //Create an array
+
+    students = new Student[3]; 
+
+/* Will create three reference variables of TYPE "Student"    whose initial value will be null.
+*/
+
+   for(Student student: students){
+       System.out.println(student); // prints null
+   }
+
+
+
+   /* Create Student objects */ 
+
+   students[0] = new Student(10,"Rajesh1");
+  // students[1] = new Student(20,"Rajesh2");
+   students[2] = new Student(30,"Rajesh3");
+
+  for(Student student: students){
+    if(student!=null){
+       System.out.println(student.getRoll() + " " 
+             + student.getName());  
+     }
+   }
+

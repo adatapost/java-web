@@ -1,0 +1,107 @@
+JDBC ( Java Database Connectivity Protocol)
+===================================================
+
+Java API has java.sql package which include number of "interfaces" and some concrete (two or three classes). In java.sql package, we dont have implementation of these interfaces instead their implementation are found in vendor specific piece of software called "JDBC Connector API" or "JDBC Drivers".
+
+It means we must have "JDBC Connector API" of concern "Database product". For example, we've "oracle 10g" then we've to download "ojdbc14.jar", and to work with "mysql", download mysql-JDBC-connector API from mysql site.
+
+
+How to use "JDBC APIS"?
+
+1. If you're working with CLI then include jdbcxxx.jar file    in your CLASSPATH.
+
+   If you've IDE - netbeans or eclipse then add reference    (copy that .jar file) to your project.
+
+2. 
+
+    Firstly, we have to load "Driver" class from the JDBCxxx.jar using following syntax in our code:
+
+
+     try{
+
+       Class.forName("oracle.jdbc.OracleDriver");
+     }catch(Exception ex){
+       System.out.println(ex);
+     }
+
+
+  The Class.forName("string ---- package.DriverClassName")   will instantiate the XXXXDriver class.
+
+    Class.forName("oracle.jdbc.OracleDriver");
+     is equivalent to:
+
+      new oracle.jdbc.OracleDriver();
+
+
+    After that, we can establish connection/session with curently running database server:
+
+
+      java.sql.Connection DriverManager
+       .getConnection("url","username","password")
+
+
+   DriverManager's static method "getConnection" returns an instance of "Database connection" if connection is established, returns null and throws an exception.
+
+
+   The first parameter called "url" describe the 
+
+     protocol:sub-protocol:serverNameOrIP
+
+      jdbc:oracle:thin:@localhost
+
+
+
+
+ java.sql.Connection cn;
+
+ cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost","scott","tiger");
+
+ To execute any SQL statement, we must have to instantiate the "Statement".
+
+
+  java.sql.PreparedStatement ps;
+
+  String sql = "update emp set ename=?, edate=? where    eno=?";
+
+  ps = cn.preapreStatement(sql);
+
+ //Update ? (parameters)
+  ps.setString(1,"Mohan");
+  ps.setDate(2, java.sql.Date.valueOf("2002-1-2"));
+  ps.setInt(3,10);
+
+  To execute Non-queries (other then SELECT statement), we will use 
+
+    int retVal = ps.executeUpdate(); 
+
+      method.
+
+   This method returns count of affected rows.
+
+
+ To execute "SELECT statements", we must have to call
+
+     ps.executeQuery() method which returns a "cursor" that will be represented by java.sql.ResultSet object.
+
+
+ Ex: Display all row from emp,
+
+    
+ 1. Load the "Driver"
+ 2. Obtain the connection
+
+ 3.
+
+    String sql = "Select * from emp";
+
+    ps = cn.prepareStatement(sql);
+
+    java.sql.ResultSet rs = ps.executeQuery();
+
+    while( rs.next() )
+     {
+         System.out.println(rs.getInt(1) +  "  " + rs.getString("ename") + " " + rs.getDate(3));
+      }
+
+
+ 

@@ -1,0 +1,67 @@
+Generic or Type Parameter
+-------------------------------------------
+In OOP, Generic is compiler driven code-reusability feature. With this technique, the compiler allow us to pass "Type" reference from one method to another or to another TYPE.
+
+General Syntax:
+
+  access_modifier class/interface  Identifier<T,M,A,...>
+  {
+   }
+
+  Names in < > are called TYPE Reference and they should use upper alphabet as per Java naming convention.
+
+ 
+Ex:
+
+class Data<T>
+{
+
+   private T  value;
+
+   public void setValue(T value){
+        this.value = value;
+   }
+   public T getValue(){ return value;}
+}
+
+
+In Java, type parameter's type must be a sub-class of java.lang.Object class.
+
+
+  We cannot use "primitive" type as type parameter.
+  
+       Data<int> a=new Data<int>(); // Incorrect
+
+
+  But , we can use wrapper of primitive one,
+
+     Data<Integer> a = new Data<Integer>();
+     Data<String> b = new Data<String>();
+
+     a.setValue(10);
+     b.setValue("String");
+
+     Integer obj = a.getValue();
+
+
+
+Before Java 1.5 (Generic introduce in 1.5), Java APIs and developer uses "Raw" or "unbounded" types.
+
+
+  class Data
+  {
+      private Object value;
+      public void setValue(Object value){
+       this.value = value;
+      }
+      public Object getValue(){ return value;}
+   }
+
+  Data a = new Data();
+  Data b = new Data();
+  a.setValue(10);
+  b.setValue("Meh");
+
+  Integer obj = (Integer) a.getValue();
+
+

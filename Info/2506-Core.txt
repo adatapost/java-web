@@ -1,0 +1,145 @@
+Object Casting (Boxing and Unboxing)
+=============================================================
+
+class A { }
+class B extends A{}
+class C extends A{}
+
+
+ The java.lang.Object class is root class of alll Java TYPES. That means if "extends" is not specified then the compiler will insert "extends java.lang.Object".
+
+
+  We can store referece of sub-class object to the reference variable of super-class is called "Boxing".
+
+   Object a = new B(); //OK
+          a = new String(); //OK
+          a = new A(); // OK
+
+
+  Obtain the reference from super-class ref variable is called "Unboxing".
+
+       A a = new A();
+       B b = new B();
+
+       a = b;   // Boxing 
+       a = new C(); //Boxing
+
+            B b = new C(); //Invalid -- Because "B" is not super-class of C
+            A a = new C(); //Valid
+
+       Unboxing example:
+
+                A  a;
+                B  b = new B();
+                C  c = new C();
+
+                a = b;//boxing
+                a = c; //boxing
+                
+                B x = (B) a; // Unboxing  ---- InvalidCast Exception
+                C y = (C) a; // OK
+
+   
+NOTE: If object's TYPE is not member (sub-class) of inheritance hierarchy then we can't cast them.
+
+      C c= new C();
+      B b = c; // Invalid   
+
+
+
+How to initialize fields (instance and static)?
+-------------------------------------------------------
+There are three ways :
+
+  1. Inline initialization     
+  2. Instance constructors
+  3. blocks -- static and instance
+
+Syntax: Inline init
+
+class Student{
+   private int roll = 0;
+   private String name = "";
+   private static String school = "ABC";
+   ....
+}
+
+Syntax: Constructors
+
+class Student{
+   private int roll;
+   private String name;
+   private static String school;
+
+   public Student(){
+        roll = 0;
+        name = "";
+    }
+   /* Never initialize static members in instance constructors */
+}
+
+
+
+Syntax: Blocks
+
+class Student{
+   private int roll;
+   private String name;
+   private static String school;
+
+   //static block
+   
+   static
+    {
+        school = "ABC School";
+        //statements.....
+     }
+
+    //instance blocks
+
+     {
+       roll = 0;
+       name = "";
+      }
+
+     //There many be one or more blocks
+
+     {
+       System.out.println("Instance blocks will be executed before the
+                           execution of instance constructor");
+      }
+
+}
+
+
+static block will be executed at-most once per JVM instance (program execution). Whenever a member of class is accessed very first time then the "static" block will be executed.
+
+
+Example
+--------------------
+
+class Test
+{
+   static
+    {
+      System.out.println("Hello from Test");
+    }
+    public Test() {
+          System.out.println("Constructor");
+     }
+}
+
+class Block
+{
+   public static void main(String []args)
+    {
+      System.out.println("Hello");
+
+       new Test();
+       new Test();
+     }
+   static
+    {
+      System.out.println("World");
+    }
+}

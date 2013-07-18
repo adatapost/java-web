@@ -1,0 +1,187 @@
+Composition -- way to establish relationship between classes 
+=================================================================
+
+Syntax:
+
+  class Address{
+     private int pin; 
+     private String city;
+     ....
+   }
+
+  class Emp{
+     private int id;
+     private String name;
+     private Address localAddress;
+     private Address postalAddress;
+     .....
+   }
+
+ class Student{
+     private int roll;
+     private String name;
+     private Address address;
+     .....
+   }
+
+A TYPE can be defined as a "Field" into another TYPE is called "Composition".
+
+Example :
+
+Address.java
+================
+public  class Address{
+     private int pin; 
+     private String city;
+     
+     //Constructors
+     public Address() { city = ""; }
+     public Address(int pin,String city) { this.pin = pin; this.city = city;}
+
+     public int getPin() { return pin;}
+     public String getCity() { return city;}
+     public void setPin(int pin) { this.pin = pin;}
+     public void setCity(String city) { this.city = city;} 
+   }
+
+Emp.java
+====================
+public class Emp{
+     private int id;
+     private String name;
+     private Address localAddress;
+     private Address postalAddress;
+      
+
+     public Emp(){
+         name = "";
+         localAddress  = new Address();
+         postalAddress  = new Address();
+     }
+      public Emp(int id,String name){
+         this.name= name;
+         this.id = id;
+         localAddress  = new Address();
+         postalAddress  = new Address();
+     }
+
+     public int getId() { return id;}
+     public String getName() { return name;}
+     public Address getLocalAddress() { return localAddress;}
+     public Address getPostalAddress() { return postalAddress;}
+  
+     public void setId(int id) { this.id= id;}
+     public void setName(String name) { this.name = name;}
+     public void setPostalAddress(Address postalAddress){
+        this.postalAddress = postalAddress;
+     }
+   public void setLocalAddress(Address localAddress){
+        this.localAddress = localAddress;
+     }
+
+   }
+
+EmpTest.java
+====================
+public class EmpTest
+{
+   public static void main(String []args)
+   {
+       Emp emp = new Emp(10,"Raj");
+ 
+       emp.getLocalAddress().setCity("Patan");
+       emp.getLocalAddress().setPin(393933);
+
+       emp.getPostalAddress().setCity("Meh");
+       emp.getPostalAddress().setPin(333333);
+
+       System.out.println(emp.getId() + " " + emp.getName());
+       System.out.println(emp.getPostalAddress().getCity() + " " + emp.getPostalAddress().getPin());
+
+ System.out.println(emp.getLocalAddress().getCity() + " " + emp.getLocalAddress().getPin());
+
+    }
+}
+
+
+Example :  Represent "student's exam data"
+
+class Subject
+{
+    private String name;
+    private int totalMarks;
+}
+
+
+class Exam
+{
+    private String date;
+    private Subject subject; 
+}
+
+class Student{
+     roll, name;
+}
+
+class StudentExam
+{
+   private Student student;
+   private Exam exam;
+   private int obtainMark;
+}
+
+Tests:
+
+ Subject math = new Subject("Maths",100);
+ Subject eng = new Subject("English",100);
+
+ Exam examMath = new Exam("1-1-2001",math);
+ Exam examEng = new Exam("2-1-2001",eng);
+ Exam examSci = new Exam("3-1-2001",new Subject("Science",75));
+
+
+
+Student s10= new Student(1,"Raj1");
+Student s11= new Student(2,"Raj2");
+Student s12= new Student(3,"Raj3");
+Student s13= new Student(4,"Raj4");
+
+
+StudentExam se1 = new StudentExam(s10,examMath,89);
+StudentExam se2 = new StudentExam(s11,examMath,34);
+StudentExam se3 = new StudentExam(s12,examEng,77);
+StudentExam se4 = new StudentExam(s13,examSci,76);
+
+se4.setObtainMarks(66);
+ 
+
+   System.out.println(se1.getStudent().getRoll() + " " + se1.getName());
+   System.out.println(se1.getExam().getSubject() + "  " + se1.getExam().getSubject().getTotalMarks()  +  " " + se1.getObtainMakrs());
+
+   System.out.println(se1.getExam().getDate());
+  
+
+Example : Shopping cart
+
+
+class Product{
+     id, name, price
+}
+
+class Customer{
+     name,address
+}
+
+class Cart
+{
+      private Product  product;
+      private Custmoer customer;
+      private int qty;
+}
+
+
+
+
+
+
+

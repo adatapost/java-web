@@ -1,0 +1,144 @@
+The Servlet API
+========================================================
+
+Servlet interfaces and classes are located at 
+
+   1. javax.servlet  and
+   2. javax.servlet.http packages
+
+In javax.servlet package, Servlet infrastructure type namely :
+
+
+   1. javax.servlet.Servlet interface and
+   2. javax.servlet.GenericServlet class
+
+The Servlet interface provide three "callback" method declaration whose implementation are found in "GenericServlet", "HttpServlet" and so on.
+
+Servlet is container managed "component" -- The application server/container is responsible to :
+
+  1. instantiate the servlet and invoke "init" method
+     where develop can attach his/her code.
+
+  2. service -- It perform Http request and response ie. it take data                 from one program and also returns output in form of
+		response.
+
+                The container will call the "service" method when user
+		request is received for that servlet and code written
+		in "service" method will be executed.
+
+ 3. destroy  -- In this stage, the container assume that the servlet
+		service is no longer available and hence it removes
+		the servlet instance from "Servlet Pool".
+
+The GenericServlet and HttpServlet classes
+===================================================
+
+The "concrete" implementation of "Servlet" interface is available in GenericServlet and HttpServlet which offers implemenation of "Servlet" for variaous protocols :
+
+  For example, the GenericServlet, as per name suggest can be used with any type/kind of communication/protocol.
+
+   Whereas "HttpServlet" must be used with "http" protocol only.
+
+The user can extends either "GenericServlet" or "HttpServlet" and place thier code into callback methods --- init, service and destroy.
+
+ The "service" method and its class based upon request type.
+ ------------------------------------------------------------
+
+  In Servlet classes, we've "service" method:
+
+  public void service(ServletRequest request,
+                      ServletResponse response)
+                           throws ServletException,IOException
+   {
+   }
+
+and in addition to the "service()", the HttpServlet offer number of request specific callback methods:
+
+ doPost, doGet, doDelete, doPut, doHead etc and all these method encapsulate "ServletRequest" and "ServletResponse" object by Http wrapper types --- HttpServletRequest and HttpServletResponse.
+
+protected void doGet(HttpServletRequest request,
+                     HttpServletResponse response)
+                         throws ServletException, IOException
+{
+}
+
+
+How to create a "Servlet"?
+========================================
+To create new servlet :
+
+  1. It must be created in named package.
+  2. It must be public
+  3. It must be registered using web.xml (deployment descriptor) or
+	@annotation 
+  4. It must be sub-class of "HttpServlet" or "GenericServlet"
+
+
+Step - 1
+
+package in.abc.servlets;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+
+public class FirstServlet extends HttpServlet
+{
+  @Override
+  public void doGet(HttpServletRequest request,
+                    HttpServletResopnse response)
+                         throws ServletException,IOException
+   {
+     //Obtain "write" object from response
+
+      response.getWriter().println("GET Request");
+
+        //Or
+        // PrintWriter pw = response.getWriter();
+        // pw.println("GET Request");
+    }
+
+ @Override
+  public void doPost(HttpServletRequest request,
+                    HttpServletResopnse response)
+                         throws ServletException,IOException
+   {
+    
+      response.getWriter().println("POST Request");
+     }
+}
+
+Step -2 
+
+Every servlet class must be "registered" via @annotation or web.xml file in order to deploy them.
+
+ In web.xml, which is case-sensitive doc contains:
+
+<web-app>
+   <servlet>
+       <servlet-name>First Servlet</servlet-name>
+       <servlet-class>in.abc.servlets.FirstServlet</servlet-class>
+   </servlet>
+  <servlet-mapping>
+       <servlet-name>First Servlet</servlet-name>
+        <url-pattern>/first</url-pattern>
+        <url-pattern>/second</url-pattern>
+        <url-pattern>/this/is/my</url-pattern>
+   </servlet-mapping>
+</web-app>
+
+             
+If you wish to use @WebServlet then do not put servlet config entry in web.xml
+  
+ @WebServlet(name = "Any name you wish", 
+             urlPatterns = {"/new", "/new/it"})
+public class NewServlet extends HttpServlet {
+   ...
+   ...
+}
+
+If you do so (added entry in web.xml) then @WebServlet annotation settings will be ignored.
+ 
+
+
+

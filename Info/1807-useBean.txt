@@ -1,0 +1,23 @@
+JSP Beans introspection (way to examine fields and assign value) feature.
+===============================================================
+ Follwing syntax create an object of "Model" or "JSP bean" and assign value to its fields from request parameters.
+
+  <jsp:useBean id="emp" class="in.abc.Emp">
+     <jsp:setProperty name="emp" property="*"/>
+   </jsp:useBean>
+
+   <form method="post">
+     <input type="text" name="id"/>
+     <input type="text" name="name"/>
+     <input type="text" name="joinDate"/>
+     <input type="submit"/>
+   </form>
+
+   <br/><jsp:getProperty name="emp" property="id"/>
+   <br/><jsp:getProperty name="emp" property="name"/>
+   <br/><jsp:getProperty name="emp" property="joinDate"/>
+
+Note : input fields name and Emp class's field names must be same.
+
+
+

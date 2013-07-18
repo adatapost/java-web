@@ -1,0 +1,141 @@
+JSP Directives
+===========================================================
+Directives also called "Pre-Processing" instruction which tells / instructs the compiler & JSP engine about the page before parse or comilation starts.
+
+1. <%@ page %>  --- Page directive
+
+2. <%@ include %> --- Multi-page inclusion directive
+
+3. <%@ tagblib %> -- To use "tag" library classes in JSP pages.
+
+
+1. <%@ page %> directive 
+
+     1. "page" name must be lowercase.
+     2. Do not repeat page directive attributes
+     2. There can be two or more page directives
+
+ Attributes
+ ===========
+
+  <%@page contentType="mime-type" pageEncoding="utf-8" %>
+
+   pageEncoding should be "utf-8" for multi-linqual text
+
+   contentType for "Html" output --- text/html
+   
+Ex: 
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<h1>Hello World</h1>
+<p>Hello &#2314;&#2315;</p>
+
+
+Ex: Generate "Text" data
+
+<%@page contentType="text/plain" pageEncoding="UTF-8" %>
+10,Rajesh,10-10-2002 
+12,Rajesh1,10-10-2002
+13,Rajesh2,10-10-2002
+
+Ex: Generate "Json" data
+
+<%@page contentType="application/json" pageEncoding="UTF-8" %>
+{"no": 10, "name": "Rajesh"}
+
+
+2. import ---- To import the packages.
+
+ <@page import="package.*,package.ClassName" %>
+
+Ex:
+
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page  import="java.util.*,java.sql.*" %>
+
+<%
+   List<String> cities = new ArrayList<String>();
+   cities.add("Mehsana");
+   cities.add("Patan");
+%>    
+<select>
+    <%
+    for(String city: cities){
+        out.println("<option>" + city + "</option>");
+    }
+   %>
+</select>
+
+3. buffer and autoFlush
+
+    To set page buffer in KB --- default value is 8kb and autoFlush is     "true"
+
+<%@page  buffer="12kb" autoFlush="true" contentType="text/html" pageEncoding="UTF-8" %>
+
+<%
+    for(int i=1;i<=100000;i++){
+        out.println(i);
+    }
+    %>
+
+
+4. errorPage="pageName.jsp"  isErrorPage="true/false"
+
+   To handle JSP error using "error-page" mechanism.
+
+ 
+   Step - 1   Create "error.jsp" which display value of "exception"
+   ==========  implicit object of JSP.
+
+
+<%@page contentType="text/html"  isErrorPage="true" pageEncoding="UTF-8"%>
+ 
+<h1>Something is wrong!!!</h1>
+<%=exception %>
+
+
+  Step-2    Create test-error.jsp to throw and test the error-page
+  =======
+
+ 
+<%@page  errorPage="error.jsp"  
+         contentType="text/html" pageEncoding="UTF-8"%>
+ 
+        <%
+            String name = null;
+            
+            out.println(name.length());
+            %>
+     
+5. language = "java"
+
+   <%@page language="java"%>  -- Language of JSP will be "java" and it                                  is by default.
+
+
+2. <%@ include %> directive --- To insert the content of specified file                                 into current JSP file.
+
+
+
+<%@include file="file.ext"%> is used to add the content of any file including .jsp and mainly it is used to create multi-page design or reuse of pages/files.
+
+
+     Ex:
+
+    |-----------------|
+    |                 |
+    |-----------------|
+    |     |           |
+    |     |           |
+    |-----------------|
+    |                 |
+    |------------------
+
+
+app/
+   |
+   | header.jsp
+   | footer.jsp
+   | index.jsp,...
+   |----/css/ style.css
+ 
+
+       

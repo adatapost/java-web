@@ -1,0 +1,7 @@
+First of connect with "system" and "xxxxxx"
+sql>connect system/password
+
+sql>create user anita identified by anita;
+
+sql>grant resource, dba, connect to anita
+

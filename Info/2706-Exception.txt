@@ -1,0 +1,33 @@
+What is an "Exception"?
+
+
+   Abnormal condition arise in a code --- called "Exception".
+
+
+class Emp
+{
+   private int age;
+
+   public Emp(int age) throws Exception
+    {
+      if(age<15)
+            throw new  Exception("Invalid Age : Minor.");
+
+      if(age>60)
+            throw new Exception("Invalid Age : It's time to retire");
+
+      this.age = age;
+     }
+}
+
+class EmpTest
+{
+   public static void main(String []args)
+    {
+        Emp emp=new Emp(50);
+
+     }
+}
+
+
+  

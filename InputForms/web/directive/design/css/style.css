@@ -1,0 +1,47 @@
+*{
+    margin:0px;
+}
+#main{
+    width:1000px;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+.nav{
+    border-rights: 1px solid #aaa;
+}
+.content{
+    
+}
+#header{
+    height:100px;
+    background:orangered;
+    color:white;
+}
+.left-side{
+    float:left;
+}
+.right-side{
+    float:right;
+}
+.clear{
+    clear:both;
+}
+
+.w20p
+{
+    width:20%;
+}
+.w80ps{
+    width:77%;
+}
+
+.h400{
+    height:400px;
+}
+#footer{
+     background: #000;
+     color:white;
+     text-align: center;
+     padding:10px;
+}

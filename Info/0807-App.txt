@@ -1,0 +1,125 @@
+The Folder Structure of Java EE Web App 
+==================================================================
+
+Java EE web application name is called "context". In fact, a context is TOP-Level (root) folder which represents Java EE webapp.
+
+Java EE webapp structure
+--------------------------
+
+1. Java platforms are case-sensitive so filenames or foldername must be as per    Java EE guideline.
+
+
+/context_name/
+            |
+            |----/META-INF (folder)
+            |
+            |----/WEB-INF (folder)
+                 |
+                 |-------/classes (folder)
+                 | 
+                 |-------/lib (folder)
+                 |
+                 | web.xml  (deployment descriptor -- configuration file)
+
+            |
+            | other folders &
+            | files
+
+
+META-INF 
+=========
+This folder contains "context" configuration, resource configuration (JDBC, Java Naming & Directory Interface) and other resources including icons, graphics, data file etc.
+
+WEB-INF
+=========
+This folder contains web.xml --- an application configuration file and two folders namely --- "classes" and "lib"
+
+
+META-INF and WEB-INF folders are protected (secured) by the "Container" and web-client (user) cannot have access to these folders.
+
+
+WEB-INF/classes
+================
+Any Java class you wish to use in your web-app, must be placed under this folder.
+
+
+WEB-INF/lib
+===============
+any third party/custom .jar files used in your web-development, must be copied into this folder.
+
+
+The Java EE contains searches .class files into "WEB-INF/classes" folder and .jar files at "WEB-INF/lib" folder.
+
+web.xml
+==========
+It is an application configuration XML file and it allow us to configure the Java EE Web Components --- JSP, Servlets, Filters.
+
+Create and deploy Java EE webapp manually
+=============================================
+1. Assume that we've already installed the Apache-Tomcat
+
+2. Goto
+  \Program Files\Apache Software Foundation\Apache Tomcat x.x\webapps
+
+  The "webapps" is a very special folder and it is the location where Java EE apps are created & hosted.
+
+   The "webapps" is called AUTO-DEPLOY folder.
+
+
+3. Set "Operating System's" file system permission of currently logged user.
+
+4. Create foll structure
+
+/student/
+       |----- META-INF
+       |------ WEB-INF/
+                      |---classes
+                      |---lib
+        |
+
+
+ 
+
+5. Create Emp.java into WEB-INF/classes folder
+
+package in.anita;
+
+public class Emp{
+    private int id;
+    
+    public int getId() { return id;}
+    public void setIt(int id) { this.id = id;}
+}
+
+
+  [Compile it]
+
+
+6. Create "index.jsp" at root of "context" (outside WEB-INF & META-INF)
+
+index.jsp
+----------
+
+<!doctype html>
+
+<%
+  String title = "Hello World";
+  in.anita.Emp emp = new in.anita.Emp();
+
+  emp.setId(10);
+
+  out.println(title);
+  out.println("<p>" + emp.getId() + "</p>");
+%>
+
+6. Start the apache-tomcat app server Or you can just start/stop the context
+
+7. Open web-browser with http://localhost:10000/student
+
+
+
+
+  
+
+
+

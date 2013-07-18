@@ -1,0 +1,351 @@
+Working with request.getParameter() and <input/> elements
+===========================================================
+
+Q - 1 How to determine which button (submit) is pressed?
+
+-----------------------------------------------------------
+
+ We can use
+   1.  <input type="submit"/>
+   2.  <input type="image"/>
+   3.  <button></button>
+
+   buttons to submit or post the form data.
+
+ Use common value for "name" attributes.
+
+
+<%
+  String cmd = request.getParameter("cmd");
+
+  if(cmd == null)
+     cmd = "";    //erase the null
+
+  if(cmd.equals("Add")){
+     out.println("Add is pressed.");
+  }
+  else
+  if(cmd.equals("Update")){
+     out.println("Update is pressed.");
+  }
+%>
+ 
+<form method="post">
+  <input type="submit" 
+         name="cmd"
+         value="Add"/>
+ <input type="submit" 
+         name="cmd"
+         value="Update"/>
+ <input type="submit" 
+         name="cmd"
+         value="Search"/>
+</form>
+
+Q - 2 Radio buttons ---- It is mandatory to set same "name" value to create a group of radio buttons.
+-----------------------------------------------
+
+<%
+  String gender = request.getParameter("gender");
+  out.println(gender);
+%>
+ 
+<form method="post">
+    <p>Gender</p>
+    <p>
+        Male : <input type="radio" name="gender" value="Male"/>
+        Female : <input type="radio" name="gender" value="Female"/>
+    </p>
+    
+  <input type="submit" 
+         name="cmd"
+         value="Select"/>
+ 
+</form>
+
+Q - 3 -- How to preserve the selection of "input" element when we          posted back ?
+
+-----------------------------------------------------------------
+
+   We need to write some value to the "attributes" of HTML tags:
+
+   For example, 
+
+      Text fields :  
+ 			<input type="text" value="<%=varName%>"/>
+
+      Radio/checkbox buttons:
+
+		<input type="radio"
+                       <%= condition ? "checked = 'checked'" : ""%>              
+      TextArea :
+
+		<textarea><%=varName%></textarea>
+
+       select (dropdown/listbox)
+
+		<select>
+		   <option 
+                         <%= condition ? "selected='selected'" : ""%>
+                    ></option>
+
+
+
+Radio button
+============
+<%
+  String gender = request.getParameter("gender");
+  
+  if(gender == null)
+      gender = "";
+  out.println(gender);
+%>
+ 
+<form method="post">
+    <p>Gender</p>
+    <p>
+        Male : <input type="radio" 
+                      name="gender" 
+                      <%=gender.equals("Male") ? "checked='checked'" : "" %>
+                      value="Male"/>
+        Female : <input type="radio" 
+                        name="gender" 
+                        <%=gender.equals("Female") ? "checked='checked'" : "" %>
+                        value="Female"/>
+    </p>
+    
+  <input type="submit" 
+         name="cmd"
+         value="Select"/>
+ 
+</form>
+
+
+Checkbox
+============
+<%
+  String play = request.getParameter("play");
+  String read = request.getParameter("read");
+  String sing = request.getParameter("sing");
+  
+  if(play == null)
+      play = "";
+  if(read == null) read = "";
+  if(sing == null) sing = "";
+  
+  out.println(play);
+  out.println(read);
+  out.println(sing);
+%>
+ 
+<form method="post">
+    <p>Hobbies</p>
+    
+       <br/> Play <input type="checkbox" 
+                      name="play" 
+                      <%=play.equals("Play") ? "checked='checked'" : "" %>
+                      value="Play"/>
+        <br/> Read  <input type="checkbox" 
+                      name="read" 
+                      <%=read.equals("Read") ? "checked='checked'" : "" %>
+                      value="Read"/>
+         <br/> Sing <input type="checkbox" 
+                      name="sing" 
+                      <%=sing.equals("Sing") ? "checked='checked'" : "" %>
+                      value="Sing"/>
+    
+  <input type="submit" 
+         name="cmd"
+         value="Select"/>
+ 
+</form>
+
+Select
+=======================
+
+ Example : Display date (day, month and year)
+
+
+<%
+   String strDay  = request.getParameter("day");
+   String strMonth  = request.getParameter("month");
+   String strYear  = request.getParameter("year");
+   
+   int intDay =0 , intYear=0;
+   String dateStr = "";
+   if(strDay!=null){
+       intDay = Integer.parseInt(strDay);
+       intYear = Integer.parseInt(strYear);
+       dateStr = strDay + "-" + strMonth + "-" + strYear;
+       out.println(dateStr);
+   }
+   
+   
+%>
+ 
+<form method="post">
+    <p>
+        Select date        
+    </p>  
+    <select name="day">
+        <%
+            for(int i=1;i<=31;i++)
+            {
+                if( i == intDay)
+                   out.println("<option  selected='selected' >" + i + "</option>");
+                else
+                    out.println("<option>" + i + "</option>");
+            }
+            %>
+    </select>
+    <select name="month">
+        <%
+            for(String name : new String[]{"Jan","Feb","Mar","Apr","May"})
+            {
+                if( name.equals(strMonth))
+                    out.println("<option selected='selected'>" + name + "</option>");
+                else
+                    out.println("<option>" + name + "</option>");
+            }
+            %>
+    </select>
+    <select name="year">
+          <%
+            for(int i=2001;i<=2031;i++)
+            {
+                 if( i == intYear)
+                   out.println("<option  selected='selected' >" + i + "</option>");
+                else
+                    out.println("<option>" + i + "</option>");
+            }
+            %>
+    </select>
+  <input type="submit" 
+         name="cmd"
+         value="Select"/>
+ 
+</form>
+
+
+ListBox ---- List to display countries
+---------------------------------------
+<%
+    String countries[] = {"India", "Nepal", "Uk", "USA"};
+    String country = request.getParameter("country");
+    if(country ==null){
+        country = "";
+    }
+
+%>
+
+<form method="post">
+    <select size="5"  name="country">
+        <%
+            for (String c : countries) {
+                if(country.equals(c))
+                    out.println("<option selected='selected'>" + c + "</option>");
+                else
+                    out.println("<option>" + c + "</option>");
+            }
+        %>
+    </select>
+
+    <input type="submit" 
+           name="cmd"
+           value="Select"/>
+
+</form>
+
+    <p><%=country%></p>
+
+
+ListBox -- Preserve the selection of multiple items
+=====================================================
+<%
+    String countries[] = {"India", "Nepal", "Uk", "USA"};
+    String[] country = request.getParameterValues("country");
+
+    if (country != null) {
+        for (String c : country) {
+            out.println(c);
+        }
+    } else {
+        country = new String[]{""};
+    }
+
+%>
+
+<form method="post">
+    <select multiple="multiple" size="5"  name="country">
+        <%
+            for (String c : countries) {
+                boolean isFound = false;
+                for (String t : country) {
+                    if (c.equals(t)) {
+                        isFound = true;
+                    }
+                }
+                if (isFound) {
+                    out.println("<option selected='selected'>" + c + "</option>");
+                } else {
+                    out.println("<option>" + c + "</option>");
+                }
+            }
+        %>
+    </select>
+
+    <input type="submit" 
+           name="cmd"
+           value="Select"/>
+
+</form>
+
+
+
+How to read multi-value from request?
+===========================================
+
+We've to use "request.getParameterValues(key)" which returns an array of value of "String" type.
+
+
+<%
+  String []names = request.getParameterValues("name");
+  String []rates = request.getParameterValues("rate");
+
+   if(names!=null){
+       for(int i=0;i<names.length;i++){
+           out.println("<br/>" + names[i] + " " + rates[i]);
+       }
+   }
+%>
+
+<form method="post">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Rate</th>
+        </tr>
+        <%
+        for(int i =1;i<=5;i++)
+        {
+            %>
+            <tr>
+                <td>
+                    <input type="text" name="name"/>
+                </td>
+                 <td>
+                    <input type="text" name="rate"/>
+                </td>
+            </tr>
+            <%
+        }
+        %>
+    </table>
+
+
+    <input type="submit" 
+           name="cmd"
+           value="Select"/>
+
+</form>
+
